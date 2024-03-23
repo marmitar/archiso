@@ -146,7 +146,6 @@ linux-firmware
 linux-firmware-marvell
 linux-firmware-qlogic
 linux-headers
-livecd-sounds
 lld
 lldb
 llvm
