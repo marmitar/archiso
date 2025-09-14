@@ -42,7 +42,6 @@ dash
 dbus-python
 ddrescue
 debugedit
-dhclient
 dhcpcd
 dialog
 difftastic
@@ -97,7 +96,6 @@ git-delta
 git-lfs
 glibd
 gnu-efi
-gnu-netcat
 gpart
 gpm
 gptfdisk
@@ -173,6 +171,7 @@ meson
 mkinitcpio
 mkinitcpio-archiso
 mkinitcpio-nfs-utils
+mmc-utils
 modemmanager
 mpdecimal
 mtools
@@ -304,7 +303,6 @@ valgrind
 vim
 virtualbox-guest-utils-nox
 vpnc
-wezterm-terminfo
 wget
 which
 wireless-regdb
@@ -312,6 +310,7 @@ wireless_tools
 wireplumber
 wpa_supplicant
 wvdial
+xdg-utils
 xfsprogs
 xl2tpd
 zip

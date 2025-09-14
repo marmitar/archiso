@@ -20,6 +20,197 @@ Fixed
 Removed
 -------
 
+[85] - 2025-07-28
+=================
+
+Fixed
+-----
+
+-  Fix systemd-networkd drop-in configuration path.
+
+[84] - 2025-06-26
+=================
+
+Added
+-----
+
+- Added ``mmc-utils`` to releng packages. It can be used to configure MMC and eMMC storage devices.
+
+Changed
+-------
+
+- Undeprecate ``/${install_dir}/grubenv``. There are use cases that rely on extracting only the ``${install_dir}`` from
+  the ISO.
+- Use ``xdg-open`` instead of hardcoding the web browser in the ``Installation_guide`` script.
+
+Removed
+-------
+
+- Removed ``rp-pppoe`` from releng packages. ``ppp`` provides a PPPoE client that is sufficient for most use cases.
+
+[83] - 2025-03-24
+=================
+
+Changed
+-------
+
+- Remove the pacstrap directory early to lower the maximum size of the working directory.
+
+Fixed
+-----
+
+- Do not hide ``pacstrap`` errors in non-verbose mode.
+
+Removed
+-------
+
+- Removed deprecated dhclient from packages.
+
+[82] - 2024-11-27
+=================
+
+Fixed
+-----
+
+- Commented out ``DownloadUser`` in ``pacman.conf`` so that the working directory is not restricted to paths to which
+  the ``alpm`` user has access to.
+
+[81] - 2024-10-28
+=================
+
+Fixed
+-----
+
+- Change enabled services in baseline and releng profile to adapt to changes in ``cloud-init`` ≥ 24.3 (renamed
+  ``cloud-init.service`` to ``cloud-init-network.service``, introduced new ``cloud-init-main.service``).
+
+Removed
+-------
+
+- Removed gnu-netcat from releng profile, as cloud-init requires openbsd-netcat and the two netcat versions can not be
+  installed side-by-side.
+
+[80] - 2024-09-26
+=================
+
+Added
+-----
+
+- Support compressing the bootstrap tarball with ``xz``.
+
+Changed
+-------
+
+- Use an empty UUID for the EROFS image file since the file system will never be referenced by it.
+- Do not use ``mkfs.erofs`` extended options ``fragments`` and ``dedupe`` in the baseline profile. This reduces the EROFS
+  image size and compression time.
+- Update profile ``pacman.conf`` to include the new options added to ``/etc/pacman.conf`` in pacman 7.0.0.r3.g7736133-1.
+
+Fixed
+-----
+
+- Show the correct image file name, including the extension, when building a bootstrap image.
+
+Removed
+-------
+
+- Removed reiserfsprogs from packages (EOL)
+
+[79] - 2024-07-25
+=================
+
+Fixed
+-----
+
+- When downloading an automation script fail with non-zero status code instead of returning an HTML document when the
+  remote HTTP server fails to deliver the document.
+
+Removed
+-------
+
+- Remove unneeded workaround for e2fsprogs < 1.47.1.
+
+[78] - 2024-05-23
+=================
+
+Changed
+-------
+
+- Moved the ``pkglist.x86_64.txt`` file outside the bootstrap tarball's ``root.x86_64`` directly to avoid polluting the
+  root file system.
+- Use 4 MiB OVMF files in ``run_archiso`` instead of the old 2 MiB ones.
+- Increase the additional free space of the EFI partition size from 1 MiB to 8 MiB to account for file system overhead
+  when using FAT32 (needs less than 1 MiB) and to give more space for adding custom files when repacking an ISO (e.g.
+  when preparing it for Secure Boot).
+- Remove 300 KiB padding needed for CDs if the ISO exceeds the maximum size of a CD.
+- Use ``xz -9e`` as the releng profile's initramfs compression. Now that mkinitcpio does not decompress the loadable
+  kernel modules and firmware files anymore and moves them to the early uncompressed initramfs, we can compress the main
+  initramfs image with a higher compression without it having much impact on the ISO build time.
+- Format the EFI system partition image as FAT32 if the size allows it (i.e. if it is at least 36 MiB).
+
+Fixed
+-----
+
+- Look for microcode update files in the initramfs images when checking if external microcode images are needed. The
+  existence of a ``early_cpio`` file is not enough since mkinitcpio can and will place other files in the early
+  uncompressed CPIO even when the ``microcode`` hook is not used.
+
+Removed
+-------
+
+- Remove the wezterm-terminfo package from the releng profile as the relevant file is now provided by the ncurses
+  package instead.
+
+[77] - 2024-04-21
+=================
+
+Added
+-----
+
+- Copy Memtest86+ EFI binary to the EFI system partition and ISO 9660 for ``uefi-x86.systemd-boot`` boot modes.
+  Additionally, create a boot entry with it for the releng profile.
+
+Changed
+-------
+
+- Change releng profile's bootstrap tarball compression from gzip to zstd. zstd provides higher and faster compression.
+- Use mkinitcpio's ``microcode`` hook instead of external microcode images to simplify boot loader configuration.
+  Custom PXE setups will need to update their boot loader configuration.
+- Replace ``archisodevice`` boot parameter with ``archisosearchuuid`` in all boot loader configuration. This allows to
+  have "file system transposition" without relaying on GRUB-specific features.
+- Replace GRUB with systemd-boot as the UEFI boot loader for the releng profile. While this increases the ISO size, it
+  avoids all GRUB-specific annoyances and oddities.
+
+Fixed
+-----
+
+- Fix requirement validation logic for the ``uefi-ia32.systemd-boot.eltorito`` boot mode. It incorrectly applied the
+  same requirements as ``uefi-x64.systemd-boot.esp``.
+
+[76] - 2024-03-30
+=================
+
+Added
+-----
+
+- Add a man page for ``mkarchiso``.
+- Implement configurable bootstrap tarball compression. It is configured in ``profiledef.sh`` using a bash array called
+  ``bootstrap_tarball_compression``. baseline tarball now uses zstd compression while releng remains with gzip for now.
+
+Changed
+-------
+
+- Move ``/boot/grub/YYYY-mm-dd-HH-MM-SS-00.uuid`` to ``/boot/YYYY-mm-dd-HH-MM-SS-00.uuid`` and always create the file.
+  Once mkinitcpio-archiso implements searching for the file in early userspace, this file's use will not be limited to
+  just GRUB.
+- Skip including external microcode images in build artifacts if the initramfs file contains ``early_cpio`` (indicating
+  an early uncompressed CPIO archive which should have the microcode update files).
+
+Removed
+-------
+
+- Remove workaround for glibc < 2.39. ``LC_ALL=C.UTF-8`` now overrides ``LANGUAGE``, just like ``LC_ALL=C``.
+
 [75] - 2024-01-24
 =================
 

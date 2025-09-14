@@ -3,7 +3,7 @@ archiso
 =======
 
 The archiso project features scripts and configuration templates to build installation media (*.iso* images and
-*.tar.gz* bootstrap images) as well as netboot artifacts for BIOS and UEFI based systems on the x86_64 architecture.
+*.tar bootstrap images) as well as netboot artifacts for BIOS and UEFI based systems on the x86_64 architecture.
 Currently creating the images is only supported on Arch Linux but may work on other operating systems as well.
 
 Requirements
@@ -35,6 +35,10 @@ For running the images in a virtualized test environment the following packages 
 For linting the shell scripts the following package is required:
 
 * shellcheck
+
+For generating the man pages:
+
+* python-docutils
 
 Profiles
 ========
@@ -171,7 +175,7 @@ or
 
 .. code:: sh
 
-  gpg --auto-key-locate keyserver --recv-keys BB8E6F1B81CF0BB301D74D1CBF425A01E68B38EF
+  gpg --auto-key-locate clear,dane --locate-external-keys devnull@nl6720.me
 
 Afterwards a tag can be verified from a clone of this repository:
 
