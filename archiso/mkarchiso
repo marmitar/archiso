@@ -864,6 +864,13 @@ _make_common_bootmode_systemd-boot() {
                     "${pacstrap_dir}/boot/vmlinuz-"*
                     "${pacstrap_dir}/boot/initramfs-"*".img"
                     "${_available_ucodes[@]}")
+
+    for file in "${efiboot_files[@]}"; do
+        if file -b "${file}" | grep -qE '\bEFI\b'; then
+            sbctl sign "${file}"
+        fi
+    done
+
     efiboot_imgsize="$(du -bcs -- "${efiboot_files[@]}" 2>/dev/null | awk 'END { print $1 }')"
     # Create a FAT image for the EFI system partition
     _make_efibootimg "$efiboot_imgsize"
