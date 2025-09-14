@@ -5,8 +5,6 @@ amd-ucode
 arch-install-scripts
 archinstall
 archiso
-autoconf
-automake
 b43-fwcutter
 base
 base-devel
@@ -15,8 +13,6 @@ bat
 bat-extras
 bcachefs-tools
 bind
-binutils
-bison
 blas-openblas
 blas64-openblas
 bolt
@@ -41,7 +37,6 @@ darkhttpd
 dash
 dbus-python
 ddrescue
-debugedit
 dhcpcd
 dialog
 difftastic
@@ -67,27 +62,19 @@ exfatprogs
 expect
 eza
 f2fs-tools
-fakeroot
 fatresize
 fbida
 fd
 ffmpeg4.4
 ffnvcodec-headers
-file
-findutils
 firejail
 fish
 fisher
-flex
 foot-terminfo
 freeglut
 fsarchiver
 fwupd
 fzf
-gawk
-gcc
-gcc-ada
-gcc-fortran
 gdb
 gdm
 geoipupdate
@@ -99,10 +86,7 @@ gnu-efi
 gpart
 gpm
 gptfdisk
-grep
 grml-zsh-config
-groff
-gzip
 hddtemp
 hdf5
 hdparm
@@ -132,7 +116,6 @@ libfido2
 libharu
 libjxl
 liblas
-libtool
 libusb-compat
 libwmf
 libzip
@@ -156,8 +139,6 @@ lua-lgi
 lua52-socket
 lvm2
 lynx
-m4
-make
 man-db
 man-pages
 mc
@@ -206,12 +187,10 @@ openresolv
 openssh
 openvpn
 p7zip
-pacman
 pacman-contrib
 partclone
 parted
 partimage
-patch
 pcsclite
 perl-cgi
 perl-clone
@@ -227,7 +206,6 @@ pipewire-pulse
 pipewire-v4l2
 pipewire-x11-bell
 pipewire-zeroconf
-pkgconf
 pkgfile
 pkgstats
 polly
@@ -263,7 +241,6 @@ rustup
 rxvt-unicode-terminfo
 screen
 sdparm
-sed
 sequoia-sq
 sg3_utils
 shfmt
@@ -274,7 +251,6 @@ squashfs-tools
 sshpass
 strace
 stress
-sudo
 systemd-resolvconf
 t1utils
 tcpdump
@@ -301,7 +277,6 @@ vim
 virtualbox-guest-utils-nox
 vpnc
 wget
-which
 wireless-regdb
 wireless_tools
 wireplumber
