@@ -168,7 +168,6 @@ python-pyudev
 python-virtualenv
 qemu-guest-agent
 read-edid
-reflector
 ripgrep
 ripgrep-all
 rsync
