@@ -5,6 +5,8 @@
 set -e -u
 shopt -s extglob
 
+read -sp 'YubiKey PIN: ' -r YUBIKEY_PIN
+
 # Control the environment
 umask 0022
 export LC_ALL="C.UTF-8"
@@ -814,6 +816,29 @@ _make_common_bootmode_uefi.systemd-boot_copy_files() {
     fi
 }
 
+_sign_with_pin() {
+    export YUBIKEY_PIN
+    export EFI_TARGET="$1"
+    # shellcheck disable=SC2016
+    expect -c '
+        set pin $env(YUBIKEY_PIN)
+        set target $env(EFI_TARGET)
+        spawn osslsigncode sign \
+            -pkcs11engine /usr/lib/engines-3/pkcs11.so \
+            -pkcs11module /usr/lib/pkcs11/opensc-pkcs11.so \
+            -key "pkcs11:id=%02;type=private" \
+            -certs "pkcs11:id=%02;type=cert" \
+            -in $target -out $target.signed
+        expect {
+            "*PIN*:" { send "$pin\r"; exp_continue }
+            eof
+        }
+        catch wait result
+        exit [lindex $result 3]
+    '
+    mv "${EFI_TARGET}.signed" "${EFI_TARGET}"
+}
+
 # Prepare systemd-boot
 _make_bootmode_uefi.systemd-boot() {
     local _conf _file _available_ucodes=() boot_entry_arch
@@ -864,7 +889,7 @@ _make_bootmode_uefi.systemd-boot() {
 
     for file in "${efiboot_files[@]}"; do
         if file -b "${file}" | grep -qE '\bEFI\b'; then
-            sbctl sign "${file}"
+            _sign_with_pin "${file}"
         fi
     done
 
