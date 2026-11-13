@@ -9,10 +9,12 @@ Archiso Authors
 * Alexander Speshilov <speshuric@gmail.com>
 * Anton Hvornum <anton@hvornum.se>
 * Antonio V <crazysnob@live.it>
+* Benjamin Schneider <ben@bens.haus>
 * Chandan Singh <cks071g2@gmail.com>
 * Charles Vejnar <ce@vejnar.org>
 * Christian Hesse <mail@eworm.de>
 * Christopher Brannon <cmbrannon79@gmail.com>
+* Clover <alex@ironrobin.net>
 * Dan McGee <dan@archlinux.org>
 * Dariusz Pelowski <dariusz.pelowski@gmail.com>
 * Darren Ng <un1gfn@gmail.com>
@@ -20,6 +22,7 @@ Archiso Authors
 * David Thurstenson <thurstylark@gmail.com>
 * Dieter Plaetinck <dieter@plaetinck.be>
 * Eli Schwartz <eschwartz@archlinux.org>
+* Elijah R <elijah@elijahr.dev>
 * Eric Toombs <567-ewtoombs@users.noreply.gitlab.archlinux.org>
 * Florian Pritz <bluewind@xinu.at>
 * Francois Dupoux <fdupoux@users.sourceforge.net>
@@ -38,10 +41,13 @@ Archiso Authors
 * Loui Chang <louipc.ist@gmail.com>
 * Lukas Fleischer <archlinux@cryptocrack.de>
 * Martin Damian Fernandez <martin.damian.fernandez@gmail.com>
+* Matej Dian <snoop05b@gmail.com>
 * Michael Gilchrist <michaelgilch@gmail.com>
 * Michael Vorburger <mike@vorburger.ch>
+* Omar Roth <roth@omar.yt>
 * Pellegrino Prevete <pellegrinoprevete@gmail.com>
 * Pierre Schmitz <pierre@archlinux.de>
+* Robin Candau <antiz@archlinux.org>
 * Sean Enck <enckse@voidedtech.com>
 * Simo Leone <simo@archlinux.org>
 * Simon Wilper <sxw@chronowerks.de>
@@ -51,10 +57,10 @@ Archiso Authors
 * Thomas Bächler <thomas@archlinux.org>
 * Tobias Powalowski <tpowa@archlinux.org>
 * Tom Yan <tom.ty89@gmail.com>
+* Yamada Hayao <shun819.mail@gmail.com>
 * Yu Li-Yu <afg984@gmail.com>
 * Zig Globulin <zig@zigsystem.com>
 * cvlc12 <cvlc12@outlook.fr>
-* hayao <hayao@fascode.net>
 * kojq su <3145-kojqsu@users.noreply.gitlab.archlinux.org>
 * mono wock <aaronleemorrison@protonmail.com>
 * nl6720 <devnull@nl6720.me>

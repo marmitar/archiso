@@ -54,6 +54,7 @@ freeglut
 fsarchiver
 fwupd
 fzf
+ghostty-terminfo
 git
 git-delta
 gnu-efi
@@ -78,6 +79,7 @@ irssi
 iw
 iwd
 kitty-terminfo
+kmscon-terminfo
 ldns
 less
 lesspipe
@@ -133,7 +135,7 @@ networkmanager
 nftables
 nmap
 nss-mdns
-ntfs-3g
+ntfsprogs
 nvme-cli
 oath-toolkit
 onefetch
