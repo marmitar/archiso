@@ -829,12 +829,6 @@ _make_bootmode_uefi.grub() {
         efiboot_files+=("${isofs_dir}/shell"*'.efi')
     fi
 
-    for file in "${efiboot_files[@]}"; do
-        if file -b "${file}" | grep -qE '\bEFI\b'; then
-            _sign_with_pin "${file}"
-        fi
-    done
-
     # Create a FAT image for the EFI system partition
     _make_efibootimg
 
@@ -886,26 +880,28 @@ _make_common_bootmode_uefi.systemd-boot_copy_files() {
 }
 
 _sign_with_pin() {
-    export YUBIKEY_PIN
-    export EFI_TARGET="$1"
-    # shellcheck disable=SC2016
-    expect -c '
-        set pin $env(YUBIKEY_PIN)
-        set target $env(EFI_TARGET)
-        # p11tool --list-all 'pkcs11:serial=23527646'
-        spawn osslsigncode sign \
-            -provider pkcs11prov \
-            -pkcs11module /usr/lib/p11-kit-proxy.so \
-            -key "pkcs11:serial=23527646;id=%02;type=private" \
-            -certs "pkcs11:serial=23527646;id=%02;type=cert;object=X.509%20Certificate%20for%20Digital%20Signature" \
-            -in $target -out $target.signed
-        expect {
-            "*PIN*:" { send "$pin\r"; exp_continue }
-            eof
-        }
-        catch wait result
-        exit [lindex $result 3]
-    '
+    EFI_TARGET="$1"
+
+    EFI_TARGET="${EFI_TARGET}" expect -f - <<EOF
+set pin ${YUBIKEY_PIN}
+set target \$env(EFI_TARGET)
+# p11tool --list-all 'pkcs11:serial=23527646'
+spawn osslsigncode sign \
+    -provider pkcs11prov \
+    -pkcs11module /usr/lib/libykcs11.so \
+    -key "pkcs11:serial=23527646;id=%02;type=private" \
+    -certs "pkcs11:serial=23527646;id=%02;type=cert;object=X.509%20Certificate%20for%20Digital%20Signature" \
+    -in \$target -out \$target.signed
+expect {
+    "*PIN*:" {
+        send "\$pin\r"
+        exp_continue
+    }
+    eof
+}
+catch wait result
+exit [lindex \$result 3]
+EOF
     mv "${EFI_TARGET}.signed" "${EFI_TARGET}"
 }
 
@@ -968,6 +964,14 @@ _make_bootmode_uefi.systemd-boot() {
                    "${boot_dir}/vmlinuz-"*
                    "${boot_dir}/initramfs-"*".img"
                    "${_available_ucodes[@]}")
+
+    for target in "${efiboot_files[@]}"; do
+        while IFS= read -r -d '' file; do
+            if file -b "${file}" | grep -qE '\bEFI\b'; then
+                _sign_with_pin "${file}"
+            fi
+        done < <(find "${target}" -type f -print0)
+    done
 
     # Create a FAT image for the EFI system partition
     _make_efibootimg
